@@ -1,0 +1,62 @@
+/* /app/styles/components/StyleSelector.module.css */
+.styleSelectorContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .chipContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .styleChip {
+    padding: 8px 16px;
+    border: 1px solid #000;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    user-select: none; /* Prevent text selection on click */
+  }
+  
+  .styleChip:hover,
+  .styleChip.selected {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .customPromptInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .selectorTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #ddd; /* or your app's light text color */
+    text-align: center;
+  }
+
+  .label,
+.orLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  color: black;
+  text-align: center;
+}
+
+.customChip {
+  font-style: italic;
+  border: 2px dashed #888;
+  background-color: #f4f4f4;
+  color: #333;
+}
+

@@ -1,0 +1,17 @@
+/* app/mobile-upload/MobileUpload.module.css */
+.mobileUploadContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: sans-serif;
+  }
+  
+  .mobileUploadContainer h1 {
+    margin-bottom: 15px;
+  }
+  
+  .mobileUploadContainer p {
+    margin-bottom: 20px;
+    text-align: center;
+  }

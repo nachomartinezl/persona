@@ -1,0 +1,42 @@
+/* /app/styles/components/MainScreen.module.css */
+.mainScreenContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .appName {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .inputSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+    margin-bottom: 20px;
+  }
+  
+  .generateButton {
+    padding: 12px 24px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    margin-top: 20px;
+  }
+  
+  .generateButton:hover:enabled {
+    background-color: #333;
+  }
+  
+  .generateButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

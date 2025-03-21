@@ -1,0 +1,20 @@
+/* /app/styles/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f0f0; /* Light grey background */
+  color: #333; /* Dark grey text for better contrast */
+}
+
+body {
+  background-color: #fff; /* White background for body content area */
+  color: #000; /* Black text */
+}
+
+* {
+  box-sizing: border-box;
+}

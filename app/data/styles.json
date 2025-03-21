@@ -1,0 +1,54 @@
+{
+    "prefix": [
+        "Ultra-realistic close-up portrait. Keep only the face, fully visible, untouched."
+    ],
+    "style": {
+        "detective": [
+            "Wearing a classic trench coat with the collar turned up and a fedora hat casting a slight shadow over the eyes. A magnifying glass is held up near the face, reflecting a subtle glint of light. The background is a dimly lit alleyway with mist swirling under a streetlamp. Cinematic noir lighting, ultra-detailed textures, 8K, masterpiece."
+        ],
+        "mafia": [
+            "Wearing a black pinstripe suit, a stylish fedora hat casting a slight shadow over the forehead, and a thick gold chain around the neck. Fingers adorned with multiple gold signet rings, exuding confidence. The background is a blurred nighttime city street, warm streetlights glowing, neon signs flickering from nearby clubs. Dramatic lighting, deep shadows, cinematic depth, hyper-detailed textures, 8K, masterpiece.",
+            "Wearing a dark, well-tailored Victorian coat with a high velvet collar and an elegant cravat tied neatly at the throat. A polished black top hat sits slightly tilted, casting a faint shadow across the forehead. The background is a misty cobblestone street at night, gas-lit lanterns flickering through the heavy London fog. Cinematic noir composition, ultra-detailed fabric textures, high contrast lighting, volumetric mist, 8K, masterpiece."
+        ],
+        "cyberpunk": [
+            "Facial features are flawlessly symmetrical with a subtle metallic sheen. Circuit-like patterns glow faintly beneath the synthetic skin. The background is a sleek, futuristic laboratory with holographic interfaces. Cool-toned lighting, hyper-detailed textures, 8K, masterpiece.",
+            "Wearing a sleek, high-tech cybernetic headset with glowing neon-blue circuits wrapping around the temples. A black tactical jacket with embedded holographic patches reflects the dim city lights. The background is a blurred, rain-soaked cyberpunk metropolis, glowing neon signs casting electric hues onto wet pavement, faint digital noise flickering in the distance. Cinematic close-up, hyper-detailed tech textures, ultra-sharp lighting, volumetric fog, 8K, masterpiece.",
+            "Wearing reflective retro sunglasses with pink and purple neon reflections. A dark leather jacket with soft neon trims. The background is a classic vaporwave skyline, glowing gridlines stretching into the horizon, palm trees silhouetted against a deep magenta sunset. Cinematic lighting, vibrant neon hues, ultra-detailed textures, 8K, masterpiece."
+        ],
+        "artistic": [
+            "The face appears cracked and fragmented, resembling shattered porcelain with neon acid colors bleeding through the fissures. Layers of thick acrylic paint swirl across the skin, creating an abstract, surreal effect. The background is a dark, ethereal void with faint color gradients shifting like liquid. Cinematic lighting, volumetric glow, high-contrast composition, hyper-detailed textures, 8K, masterpiece."
+        ],
+        "spaceman": [
+            "Wearing a high-tech NASA spacesuit with intricate mission patches and reinforced fabric layers. The suit is equipped with LED-lit status indicators on the chest plate. The background is a futuristic space station with large glass windows revealing Earth’s blue glow in the distance. Subtle reflections on the polished metal walls, soft interior lighting, cinematic depth, ultra-detailed textures, 8K, masterpiece.",
+            "Wearing a high-altitude flight suit, unzipped slightly, revealing the thermal base layer underneath, with an oxygen mask unclipped and hanging at the side while the helmet rests under one arm. A confident expression with sharp, trained focus, and faint cockpit reflections visible in the visor. The background is a high-tech fighter jet cockpit, HUD holographic displays glowing in green, with a soft blue sky visible through the canopy. Shot on Sony A7R IV, G Master 50mm f/1.2 lens, f/1.8 aperture for moderate depth of field, balanced soft cockpit lighting mixed with ambient daylight, and a cool metallic color palette with subtle green HUD reflections. The composition follows high-resolution aviation photography principles, keeping a straight-on angle for direct engagement. **Tags:** detailed face, realistic skin tone, skin texture, cinematic aviation lighting, volumetric cockpit glow, ultra-sharp textures, 8K, masterpiece."
+        ],
+        "firefighter": [
+            "Wearing a heavy-duty firefighter uniform with reflective stripes and a reinforced fire-resistant jacket. Soot and sweat mark the fabric, showing battle-tested experience. The background is an active fire scene, with smoke rising from a burning building, flashing emergency lights in the distance, and a fire hose spraying water. Dramatic lighting, hyper-detailed textures, volumetric smoke, cinematic composition, 8K, masterpiece."
+        ],
+        "police": [
+            "Wearing a crisp navy-blue police uniform with a badge reflecting the ambient light, tactical belt equipped with handcuffs and a radio. A reinforced bulletproof vest adds a layer of protection. The background is a bustling city at night, flashing red and blue police lights illuminating a dimly lit urban street. Cinematic high-contrast lighting, ultra-detailed uniform textures, volumetric mist, 8K, masterpiece."
+        ],
+        "military": [
+            "Wearing a high-tech military combat uniform with reinforced tactical gear, body armor strapped securely, and a communication headset over the ear. A determined expression with slight battle scars, dirt smudges, and sweat glistening under harsh lighting. The background is a war-torn urban landscape with heavy smoke rising from distant fires, scattered debris visible in the soft depth of field. Shot on Canon EOS R5, RF 85mm f/1.2L lens, f/1.4 aperture for shallow depth of field, high-contrast directional lighting, and a muted, desaturated color palette with warm fire-lit highlights. The image captures a documentary war photography style, with a close-up slightly below eye level to emphasize power and resilience. **Tags:** detailed face, realistic skin tone, skin texture, military realism, cinematic lighting, volumetric smoke, hyper-detailed textures, 8K, masterpiece."
+        ],
+        "cowboy": [
+            "Wearing a weathered cowboy hat with detailed leather textures, tilted slightly, casting a soft shadow over the forehead. A rugged, dust-covered brown duster collar wraps around the neck, the rough texture visible in fine detail. A deep, determined expression, sun-kissed skin from years in the desert. The background is blurred with warm golden light, hints of a western saloon entrance and dry desert air. Cinematic soft-focus, 8K, hyper-realistic, ultra-sharp facial details, dramatic rim lighting, volumetric dust, masterpiece."
+        ],
+        "gladiator": [
+            "Wearing an ancient Roman gladiator helmet, the top slightly dented from battle, with an intricate gold-etched crest running along the ridge. A deep crimson cape drapes over one shoulder, partially covering a bronze-plated chest guard. The background is a blurred Colosseum arena, golden sunlight filtering through rising dust, the roar of the distant crowd faintly visible in the haze. Cinematic lighting, hyper-detailed armor textures, ultra-sharp metallic reflections, volumetric dust, 8K, masterpiece."
+        ],
+        "businessman": [
+            "Wearing a dark navy-blue power suit with a crisp white dress shirt and a neatly knotted tie. A small lapel pin reflects national pride. The background is an official press conference with blurred reporters and microphones, bright camera flashes illuminating the subject. The soft glow of chandeliers reflects on polished marble floors. Cinematic depth, high-contrast lighting, ultra-detailed textures, 8K, masterpiece.",
+            "Wearing a tailored charcoal-gray suit with a silk tie and polished cufflinks. The suit fabric has fine woven detailing, exuding wealth and power. The background is a sleek glass-walled high-rise office, with a panoramic cityscape of skyscrapers glowing under a sunset. Cinematic luxury lighting, hyper-detailed textures, ultra-sharp clarity, 8K, masterpiece."
+        ],
+        "gangster": [
+            "Headshot style. Keep the face. Subject is wearing a 1920's gangster suit, similar to Al Capone.Maintain the face. Portrait style. Black and white with a hint of sepia."
+        ],
+        "doctor": [
+            "Wearing a snug, disposable surgical cap with faint fabric folds and light wrinkles. A medical face mask pulled down, revealing focused yet slightly exhausted features. A stethoscope loops around the neck, catching the soft fluorescent light of the operating room. The background is a blurred, sterile surgical environment, faint heart monitor glow reflecting on the metallic instruments. Cinematic high-contrast lighting, hyper-detailed skin textures, ultra-realistic medical elements, volumetric light haze, 8K, masterpiece."
+        ],
+        "pirate": [
+            "Wearing a dark tricorn pirate hat with embroidered golden patterns, slightly tilted, with a weathered leather strap crossing the forehead. A deep navy coat collar frames the face, with worn, stitched edges from years at sea. A small golden earring catches the light, and faint sea mist clings to the skin. The background is a blurred stormy ocean, lantern-lit wooden ship rails barely visible in the distance. Cinematic close-up, hyper-detailed textures, ultra-sharp lighting, volumetric sea mist, 8K, masterpiece."
+        ]
+    }
+}

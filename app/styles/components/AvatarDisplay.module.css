@@ -1,0 +1,69 @@
+/* /app/styles/components/AvatarDisplay.module.css */
+.avatarDisplayContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .avatarImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    gap: 20px; /* Increased gap for icon buttons */
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Styles for icon buttons */
+  .iconButton {
+    display: flex;          /* Use flex to stack icon and text vertically */
+    flex-direction: column; /* Stack icon and text */
+    align-items: center;    /* Center icon and text horizontally */
+    padding: 10px;         /* Adjust padding as needed */
+    background-color: transparent; /* No background */
+    color: #000;             /* Icon and text color */
+    border: none;            /* No border */
+    cursor: pointer;
+    transition: color 0.2s ease; /* Hover effect on color */
+  }
+  
+  .iconButton:hover {
+    color: #333;           /* Darker color on hover */
+  }
+  
+  .buttonText {
+    font-size: 0.8rem;       /* Smaller font size for text label */
+    margin-top: 5px;        /* Space between icon and text */
+    text-align: center;     /* Center text if it wraps */
+  }
+  
+  /* REMOVE or comment out old .actionButton styles if you want to clean up
+  .actionButton {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .actionButton:hover {
+    background-color: #000;
+    color: #fff;
+  }
+  */
