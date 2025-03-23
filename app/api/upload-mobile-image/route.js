@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { mkdir, writeFile } from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import path from 'path';
 import { NextResponse } from 'next/server';
 
@@ -15,21 +15,18 @@ export async function POST(req) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const dirPath = path.join(process.cwd(), 'public/temp-images');
-    if (!fs.existsSync(dirPath)) {
-      await mkdir(dirPath, { recursive: true }); // 💡 create directory if not exists
-    }
-
     const fileName = `image-${Date.now()}${path.extname(file.name) || '.jpg'}`;
-    const filePath = path.join(dirPath, fileName);
+    const filePath = path.join('/tmp', fileName);
 
+    // ✅ Save image in /tmp (runtime-safe on Vercel)
     await writeFile(filePath, buffer);
 
-    const imageUrl = `/temp-images/${fileName}`;
-    console.log("✅ Image saved:", imageUrl);
+    // 🧠 Save metadata for polling from desktop
+    const latestJsonPath = path.join('/tmp', 'latest.json');
+    await writeFile(latestJsonPath, JSON.stringify({ imagePath: filePath }));
 
-    return NextResponse.json({ imageUrl }, { status: 200 });
-
+    console.log("✅ Image saved to:", filePath);
+    return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("❌ Upload Error:", error);
     return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
