@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/components/MainScreen.module.css';
 import ImageUploader from './ImageUploader';
@@ -8,7 +6,7 @@ import AvatarDisplay from './AvatarDisplay';
 import Loader from './Loader';
 
 const MainScreen = () => {
-  const [uploadedImage, setUploadedImage] = useState(null); // can be File or URL
+  const [uploadedImage, setUploadedImage] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState('');
   const [customPrompt, setCustomPrompt] = useState('');
   const [generatedAvatar, setGeneratedAvatar] = useState(null);
@@ -16,13 +14,34 @@ const MainScreen = () => {
   const [mobileUploadURL, setMobileUploadURL] = useState(null);
   const [isQrUploadActive, setIsQrUploadActive] = useState(false);
   const [pollingActive, setPollingActive] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const [toast, setToast] = useState(null);
+
+  useEffect(() => {
+    let existingId = localStorage.getItem('persona:sessionId');
+    if (!existingId) {
+      existingId = crypto.randomUUID();
+      localStorage.setItem('persona:sessionId', existingId);
+      console.log('🆕 New sessionId created:', existingId);
+    } else {
+      console.log('🔁 Existing sessionId restored:', existingId);
+    }
+    setSessionId(existingId);
+  }, []);
+
+  const showToast = (msg, duration = 3000) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), duration);
+  };
 
   const startQrUpload = () => {
+    console.log('🟢 QR upload started');
     setIsQrUploadActive(true);
     setPollingActive(true);
   };
 
   const stopQrUpload = () => {
+    console.log('🔴 QR upload stopped');
     setIsQrUploadActive(false);
     setPollingActive(false);
   };
@@ -39,27 +58,43 @@ const MainScreen = () => {
   useEffect(() => {
     if (!pollingActive) return;
 
+    console.log('🔁 Starting QR polling...');
+
     const pollingInterval = setInterval(async () => {
       try {
         const response = await fetch('/api/check-new-image');
-        if (response.ok) {
-          const data = await response.json();
-          if (data.latestImageUrl) {
-            setUploadedImage(data.latestImageUrl); // it's already a URL
-            stopQrUpload();
-          }
+        const data = await response.json();
+        if (response.ok && data.latestImageUrl) {
+          console.log('📸 Received uploaded image from mobile!');
+          const res = await fetch(data.latestImageUrl);
+          const blob = await res.blob();
+          const file = new File([blob], 'mobile-upload.png', { type: blob.type });
+          setUploadedImage(file);
+          stopQrUpload();
+          showToast('📱 Mobile image received!');
+        } else {
+          console.log('📭 No new image found yet');
         }
-      } catch (error) {
-        console.error('Error checking for new image:', error);
+      } catch (err) {
+        console.error('🚨 Error polling for new image:', err);
       }
     }, 3000);
 
-    return () => clearInterval(pollingInterval);
+    return () => {
+      console.log('🛑 Stopping QR polling...');
+      clearInterval(pollingInterval);
+      setPollingActive(false);
+    };
   }, [pollingActive]);
 
   const handleGenerateAvatar = async () => {
-    if (!uploadedImage) {
-      alert('Please upload an image before generating.');
+    if (!uploadedImage || !(uploadedImage instanceof File)) {
+      showToast('Please upload an image before generating.');
+      return;
+    }
+
+    if (selectedStyle === 'custom' && customPrompt.trim() === '') {
+      showToast('Please write a custom prompt before generating.');
       return;
     }
 
@@ -67,30 +102,10 @@ const MainScreen = () => {
     setGeneratedAvatar(null);
 
     try {
-      let imageUrl = uploadedImage;
-
-      // If it's a File, upload it to get a URL
-      if (uploadedImage instanceof File) {
-        const formData = new FormData();
-        formData.append('image', uploadedImage);
-
-        const uploadRes = await fetch('/api/upload-mobile-image', {
-          method: 'POST',
-          body: formData,
-        });
-
-        const uploadData = await uploadRes.json();
-        if (!uploadRes.ok || !uploadData.imageUrl) {
-          throw new Error('Failed to upload image.');
-        }
-
-        imageUrl = uploadData.imageUrl;
-      }
-
-      // Send only the image URL to the generate-avatar endpoint
       const formData = new FormData();
-      formData.append('image', imageUrl); // it's a URL now
+      formData.append('image', uploadedImage);
       formData.append('style', selectedStyle === 'custom' ? customPrompt : selectedStyle);
+      formData.append('sessionId', sessionId);
 
       const res = await fetch('/api/generate-avatar', {
         method: 'POST',
@@ -102,10 +117,11 @@ const MainScreen = () => {
         throw new Error('Avatar generation failed.');
       }
 
+      console.log('✅ Avatar generated!');
       setGeneratedAvatar(data.avatarUrl);
     } catch (err) {
       console.error('Error generating avatar:', err);
-      alert('Something went wrong.');
+      showToast('Something went wrong while generating.');
     } finally {
       setIsLoading(false);
     }
@@ -125,8 +141,17 @@ const MainScreen = () => {
             isQrUploadActive={isQrUploadActive}
             mobileUploadURL={mobileUploadURL}
           />
-          <StyleSelector onStyleSelect={setSelectedStyle} onCustomPromptChange={setCustomPrompt} />
-          <button className={styles.generateButton} onClick={handleGenerateAvatar} disabled={isLoading}>
+          <StyleSelector
+            onStyleSelect={setSelectedStyle}
+            onCustomPromptChange={setCustomPrompt}
+            selectedStyle={selectedStyle}
+            customPrompt={customPrompt}
+          />
+          <button
+            className={styles.generateButton}
+            onClick={handleGenerateAvatar}
+            disabled={isLoading || (selectedStyle === 'custom' && customPrompt.trim() === '')}
+          >
             Generate
           </button>
         </div>
@@ -139,6 +164,8 @@ const MainScreen = () => {
       )}
 
       {isLoading && <Loader />}
+
+      {toast && <div className={styles.toast}>{toast}</div>}
     </div>
   );
 };

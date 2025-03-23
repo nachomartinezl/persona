@@ -1,62 +1,86 @@
-/* /app/styles/components/StyleSelector.module.css */
 .styleSelectorContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .chipContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .styleChip {
-    padding: 8px 16px;
-    border: 1px solid #000;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    user-select: none; /* Prevent text selection on click */
-  }
-  
-  .styleChip:hover,
-  .styleChip.selected {
-    background-color: #000;
-    color: #fff;
-  }
-  
-  .customPromptInput {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    font-size: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  animation: fadeIn 0.4s ease;
+}
 
-  .selectorTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: #ddd; /* or your app's light text color */
-    text-align: center;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .label,
-.orLabel {
-  font-size: 1rem;
+.selectorTitle {
+  font-size: 1.1rem;
   font-weight: 600;
-  margin: 1rem 0 0.5rem;
-  color: black;
+  margin-bottom: 1rem;
+  color: #111;
   text-align: center;
+}
+
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.styleChip {
+  padding: 8px 16px;
+  border: 1px solid #000;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  background-color: #fff;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+.styleChip:hover {
+  background-color: #111;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.styleChip.selected {
+  background-color: #000;
+  color: #fff;
 }
 
 .customChip {
   font-style: italic;
   border: 2px dashed #888;
   background-color: #f4f4f4;
-  color: #333;
+  color: #444;
 }
 
+.orLabel {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 1rem 0 0.5rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.customPromptInput {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.customPromptInput:focus {
+  outline: none;
+  border-color: #333;
+}

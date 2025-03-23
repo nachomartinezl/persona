@@ -1,9 +1,9 @@
-// app/mobile-upload/page.js
 'use client';
 
 import React from 'react';
 import styles from './MobileUpload.module.css';
 import ImageUploader from '../components/ImageUploader';
+import { FaCheckCircle, FaExclamationTriangle, FaSpinner } from 'react-icons/fa';
 
 const MobileUploadPage = () => {
   const [uploadStatus, setUploadStatus] = React.useState('idle'); // 'idle', 'uploading', 'success', 'error'
@@ -22,44 +22,58 @@ const MobileUploadPage = () => {
     formData.append('image', imageFile);
 
     try {
-      const response = await fetch('/api/upload-mobile-image', {
+      const res = await fetch('/api/upload-mobile-image', {
         method: 'POST',
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json(); // Try to get error message from server
-        throw new Error(`Upload failed: ${response.status} - ${errorData?.error || response.statusText}`);
+      if (!res.ok) {
+        throw new Error('Upload failed');
       }
 
-      setUploadStatus('success'); // Set success status
-      // No redirection here anymore!
-
-    } catch (error) {
-      console.error('Error uploading image:', error);
+      setUploadStatus('success');
+    } catch (err) {
+      console.error('Error uploading image:', err);
       setUploadStatus('error');
-      setErrorMessage(error.message);
+      setErrorMessage(err.message);
     }
   };
 
   return (
     <div className={styles.mobileUploadContainer}>
       <h1>Upload Image from Mobile</h1>
-      <p>Use the uploader below to select an image from your mobile device.</p>
+      <p className={styles.instructions}>
+        Tap below to take a photo or pick from gallery.
+      </p>
 
-      {uploadStatus === 'idle' || uploadStatus === 'uploading' || uploadStatus === 'error' ? (
-        <ImageUploader onImageUpload={handleImageUploadMobile} uploadedImage={null} />
-      ) : null} {/* Don't show uploader after success */}
+      {uploadStatus === 'idle' && (
+        <ImageUploader
+          onImageUpload={handleImageUploadMobile}
+          uploadedImage={null}
+          hideQrOption={true}
+        />
+      )}
 
-      {uploadStatus === 'uploading' && <p>Uploading image...</p>}
+      {uploadStatus === 'uploading' && (
+        <div className={styles.statusMessage}>
+          <FaSpinner className={styles.spinnerIcon} />
+          Uploading image...
+        </div>
+      )}
 
-      {uploadStatus === 'success' && <p style={{ color: 'green' }}>Image uploaded successfully!</p>}
+      {uploadStatus === 'success' && (
+        <div className={`${styles.statusMessage} ${styles.success}`}>
+          <FaCheckCircle className={styles.statusIcon} />
+          Image uploaded successfully! You can now return to desktop.
+        </div>
+      )}
 
       {uploadStatus === 'error' && (
-        <p style={{ color: 'red' }}>
-          Image upload failed. Please try again. <br />
-          {errorMessage && `Error: ${errorMessage}`}
-        </p>
+        <div className={`${styles.statusMessage} ${styles.error}`}>
+          <FaExclamationTriangle className={styles.statusIcon} />
+          Upload failed. Please try again.<br />
+          {errorMessage && <span className={styles.errorText}>Error: {errorMessage}</span>}
+        </div>
       )}
     </div>
   );

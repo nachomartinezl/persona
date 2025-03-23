@@ -1,10 +1,7 @@
-import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import fs from 'fs';
+import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
-
-export const config = {
-  api: { bodyParser: false },
-};
+import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
@@ -18,8 +15,13 @@ export async function POST(req) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    const dirPath = path.join(process.cwd(), 'public/temp-images');
+    if (!fs.existsSync(dirPath)) {
+      await mkdir(dirPath, { recursive: true }); // 💡 create directory if not exists
+    }
+
     const fileName = `image-${Date.now()}${path.extname(file.name) || '.jpg'}`;
-    const filePath = path.join(process.cwd(), 'public/temp-images', fileName);
+    const filePath = path.join(dirPath, fileName);
 
     await writeFile(filePath, buffer);
 
