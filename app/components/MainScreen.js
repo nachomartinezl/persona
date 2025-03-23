@@ -4,6 +4,7 @@ import ImageUploader from './ImageUploader';
 import StyleSelector from './StyleSelector';
 import AvatarDisplay from './AvatarDisplay';
 import Loader from './Loader';
+const RAILWAY_API_URL = process.env.NEXT_PUBLIC_RAILWAY_API_URL;
 
 const MainScreen = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -115,7 +116,7 @@ const MainScreen = () => {
       formData.append('style', selectedStyle === 'custom' ? customPrompt : selectedStyle);
       formData.append('sessionId', sessionId);
 
-      const res = await fetch(process.env.RAILWAY_API_URL, {
+      const res = await fetch(RAILWAY_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
