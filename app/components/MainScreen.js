@@ -107,9 +107,14 @@ const MainScreen = () => {
       formData.append('style', selectedStyle === 'custom' ? customPrompt : selectedStyle);
       formData.append('sessionId', sessionId);
 
-      const res = await fetch('/api/generate-avatar', {
+      const res = await fetch(process.env.RAILWAY_API_URL, {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64: await toBase64(uploadedImage),
+          stylePrompt: selectedStyle === 'custom' ? customPrompt : selectedStyle,
+          sessionId,
+        }),
       });
 
       const data = await res.json();
