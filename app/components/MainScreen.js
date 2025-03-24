@@ -172,31 +172,24 @@ const MainScreen = () => {
     const maxAttempts = 40;
     let attempts = 0;
 
-    const pollStatus = async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
-        const data = await res.json();
+    const pollStatus = async (jobId) => {
+      const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
+      const data = await res.json();
 
-        if (data.status === "complete" && data.result) {
-          console.log("✅ Avatar generation complete!");
-          setActiveJob({ jobId, avatarUrl: data.result });
-          setIsLoading(false);
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(pollStatus, pollInterval);
-        } else {
-          console.warn("⚠️ Avatar generation timed out.");
-          showToast("Avatar generation timed out.");
-          setIsLoading(false);
-        }
-      } catch (err) {
-        console.error("❌ Polling error:", err);
-        showToast("Error while checking avatar status.");
+      if (data.status === "complete" && data.result) {
+        console.log("✅ Avatar generation complete!");
+        setActiveJob({ jobId: jobId, avatarUrl: data.result });
+        setIsLoading(false);
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(() => pollStatus(jobId), pollInterval);
+      } else {
+        showToast("Avatar generation timed out.");
         setIsLoading(false);
       }
     };
 
-    pollStatus(); // start polling loop
+    pollStatus(jobId); // start polling loop
   };
 
   const handleGenerateAvatar = async () => {
