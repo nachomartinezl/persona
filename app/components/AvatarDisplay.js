@@ -5,7 +5,6 @@ import { FiDownload, FiRefreshCw, FiPlusCircle } from "react-icons/fi";
 
 const AvatarDisplay = ({
   avatarUrl,
-  currentJobId,
   onNewRun,
   onReGenerate,
   pastJobs = [],

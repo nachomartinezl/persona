@@ -1,0 +1,55 @@
+{
+    "prefix": [
+      "Ultra-realistic close-up portrait. Keep only the face, fully visible, untouched."
+    ],
+    "style": {
+      "detective": [
+        "Wearing a classic trench coat and fedora casting subtle shadows, holding a magnifying glass. Set in a misty, dim alley under a streetlamp. Noir lighting, ultra-detailed, 8K, masterpiece."
+      ],
+      "mafia": [
+        "Wearing a black pinstripe suit, fedora, and thick gold chain, with gold rings. Background: blurred nighttime city with neon club signs. Dramatic lighting, deep shadows, cinematic, ultra-detailed, 8K, masterpiece.",
+        "Wearing a dark Victorian coat with a high velvet collar, cravat, and tilted top hat. Set on a misty cobblestone street with gas-lit lanterns. Noir composition, ultra-detailed, high contrast, volumetric mist, 8K, masterpiece."
+      ],
+      "cyberpunk": [
+        "Flawlessly symmetrical face with a metallic sheen and glowing circuit patterns under synthetic skin. Background: futuristic lab with holographic interfaces. Cool lighting, hyper-detailed, 8K, masterpiece.",
+        "Wearing a sleek cybernetic headset with neon-blue circuits and a black tactical jacket with holographic patches. Background: rain-soaked cyberpunk city with glowing neon signs. Cinematic, ultra-detailed, volumetric fog, 8K, masterpiece.",
+        "Wearing reflective retro sunglasses with pink-purple neon reflections and a dark leather jacket with neon trims. Background: vaporwave skyline with glowing gridlines and palm trees against a magenta sunset. Cinematic lighting, ultra-detailed, 8K, masterpiece."
+      ],
+      "artistic": [
+        "Face cracked like shattered porcelain with neon acid colors bleeding through, layered with thick acrylic paint for an abstract, surreal effect. Background: dark void with shifting gradients. Cinematic lighting, volumetric glow, ultra-detailed, 8K, masterpiece."
+      ],
+      "spaceman": [
+        "Wearing a high-tech NASA spacesuit with mission patches and LED indicators. Background: futuristic space station with glass windows showing Earth’s blue glow. Cinematic depth, ultra-detailed, 8K, masterpiece.",
+        "Sporting a high-altitude flight suit, unzipped to reveal a thermal base layer, with an oxygen mask and helmet aside. Confident look with cockpit reflections. Background: high-tech fighter jet cockpit with green HUD displays and a blue sky. Cinematic aviation lighting, ultra-detailed, 8K, masterpiece."
+      ],
+      "firefighter": [
+        "Wearing a heavy-duty firefighter uniform with reflective stripes and a reinforced jacket, marked by soot and sweat. Background: active fire scene with rising smoke, emergency lights, and a spraying hose. Dramatic lighting, ultra-detailed, volumetric smoke, 8K, masterpiece."
+      ],
+      "police": [
+        "Wearing a crisp navy-blue police uniform with a reflective badge, tactical belt with handcuffs and radio, and a bulletproof vest. Background: bustling night city with red-blue police lights. Cinematic high contrast, ultra-detailed, volumetric mist, 8K, masterpiece."
+      ],
+      "military": [
+        "Wearing a high-tech military combat uniform with tactical gear, body armor, and headset. Determined expression with scars and sweat. Background: war-torn urban scene with smoke and debris. Cinematic high contrast, ultra-detailed, 8K, masterpiece."
+      ],
+      "cowboy": [
+        "Wearing a weathered cowboy hat and a dust-covered brown duster collar. Deep, determined look with sun-kissed skin. Background: blurred warm golden light with hints of a western saloon and desert. Cinematic soft-focus, ultra-sharp, 8K, masterpiece."
+      ],
+      "gladiator": [
+        "Wearing an ancient Roman gladiator helmet with a dented, gold-etched crest and a deep crimson cape over a bronze chest guard. Background: blurred Colosseum with golden sunlight and dust. Cinematic lighting, ultra-detailed, 8K, masterpiece."
+      ],
+      "businessman": [
+        "Wearing a dark navy-blue power suit with a white dress shirt, tie, and a lapel pin. Background: press conference with blurred reporters and flashes. Cinematic depth, ultra-detailed, 8K, masterpiece.",
+        "Wearing a tailored charcoal-gray suit with a silk tie and cufflinks. Background: sleek glass-walled office with a sunset cityscape. Cinematic luxury lighting, ultra-detailed, 8K, masterpiece."
+      ],
+      "gangster": [
+        "Headshot: Subject in a 1920s gangster suit (Al Capone style). Black and white with a sepia tint. Keep the face."
+      ],
+      "doctor": [
+        "Wearing a disposable surgical cap and a pulled-down mask revealing focused, tired features. Stethoscope around the neck. Background: sterile surgical room with a heart monitor glow. Cinematic high contrast, ultra-detailed, 8K, masterpiece."
+      ],
+      "pirate": [
+        "Wearing a dark tricorn pirate hat with embroidered gold patterns and a weathered leather strap. Deep navy coat collar with worn edges and a golden earring. Background: blurred stormy ocean with lantern-lit ship rails. Cinematic close-up, ultra-detailed, 8K, masterpiece."
+      ]
+    }
+  }
+  
