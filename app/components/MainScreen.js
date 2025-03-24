@@ -104,42 +104,64 @@ const MainScreen = () => {
 
   const handleGenerateAvatar = async () => {
     if (!uploadedImage || !(uploadedImage instanceof File)) {
-      return showToast('Please upload an image before generating.');
+      showToast('Please upload an image before generating.');
+      return;
     }
-
+  
     if (selectedStyle === 'custom' && customPrompt.trim() === '') {
-      return showToast('Please write a custom prompt before generating.');
+      showToast('Please write a custom prompt before generating.');
+      return;
     }
-
+  
     setIsLoading(true);
     setGeneratedAvatar(null);
-
+  
     try {
-      const payload = await generatePayload();
-      const res = await fetch(`${BASE_URL}/submit-job`, {
+      const jobRes = await fetch(`${RAILWAY_API_URL}/submit-job`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          imageBase64: await toBase64(uploadedImage),
+          stylePrompt: selectedStyle === 'custom' ? customPrompt : selectedStyle,
+          sessionId,
+        }),
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.jobId) {
-        throw new Error('Job submission failed.');
-      }
-
-      console.log('📨 Job submitted:', data.jobId);
-
-      // 🟡 Polling logic for result can be added here (for MVP now we skip)
-
-      showToast('✅ Job submitted successfully!');
+  
+      const jobData = await jobRes.json();
+      const jobId = jobData.jobId;
+  
+      if (!jobId) throw new Error("Failed to submit job");
+  
+      // ⏳ Polling loop
+      const pollInterval = 2500;
+      const maxAttempts = 40;
+      let attempts = 0;
+  
+      const pollStatus = async () => {
+        const res = await fetch(`${RAILWAY_API_URL}/check-status/${jobId}`);
+        const data = await res.json();
+  
+        if (data.status === 'complete' && data.result) {
+          console.log('✅ Avatar generation complete!');
+          setGeneratedAvatar(data.result);
+          setIsLoading(false);
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(pollStatus, pollInterval);
+        } else {
+          throw new Error('Timeout: Job took too long.');
+        }
+      };
+  
+      pollStatus();
+  
     } catch (err) {
-      console.error('❌ Error generating avatar:', err);
+      console.error('❌ Error during generation:', err);
       showToast('Something went wrong while generating.');
-    } finally {
       setIsLoading(false);
     }
   };
-
+  
   return (
     <div className={styles.mainScreenContainer}>
       <h1 className={styles.appName}>Persona</h1>
