@@ -179,7 +179,7 @@ const MainScreen = () => {
     }
 
     setIsLoading(true);
-    setGeneratedAvatar(null);
+    setActiveJob(null);
 
     try {
       const jobRes = await fetch(`${BASE_URL}/submit-job`, {
@@ -209,7 +209,7 @@ const MainScreen = () => {
 
         if (data.status === "complete" && data.result) {
           console.log("✅ Avatar generation complete!");
-          setGeneratedAvatar(data.result);
+          setActiveJob({ jobId, avatarUrl: data.result });
           setIsLoading(false);
         } else if (attempts < maxAttempts) {
           attempts++;
