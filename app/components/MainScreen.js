@@ -167,31 +167,63 @@ const MainScreen = () => {
     };
   }, [pollingActive]);
 
+  const startPolling = (jobId) => {
+    const pollInterval = 2500;
+    const maxAttempts = 40;
+    let attempts = 0;
+
+    const pollStatus = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
+        const data = await res.json();
+
+        if (data.status === "complete" && data.result) {
+          console.log("✅ Avatar generation complete!");
+          setActiveJob({ jobId, avatarUrl: data.result });
+          setIsLoading(false);
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(pollStatus, pollInterval);
+        } else {
+          console.warn("⚠️ Avatar generation timed out.");
+          showToast("Avatar generation timed out.");
+          setIsLoading(false);
+        }
+      } catch (err) {
+        console.error("❌ Polling error:", err);
+        showToast("Error while checking avatar status.");
+        setIsLoading(false);
+      }
+    };
+
+    pollStatus(); // start polling loop
+  };
+
   const handleGenerateAvatar = async () => {
     let imageBase64 = null;
-  
+
     if (uploadedImage && uploadedImage instanceof File) {
       imageBase64 = await toBase64(uploadedImage);
     } else if (activeJob?.avatarUrl?.startsWith("data:image/")) {
-      imageBase64 = activeJob.avatarUrl; // 👈 Use existing base64
+      imageBase64 = activeJob.avatarUrl;
     } else {
       showToast("Please upload an image before generating.");
       return;
     }
-    
+
     if (!selectedStyle) {
       showToast("Please select a style before generating.");
       return;
     }
-    
+
     if (selectedStyle === "custom" && customPrompt.trim() === "") {
       showToast("Please write a custom prompt before generating.");
       return;
     }
-  
+
     setIsLoading(true);
     setActiveJob(null);
-  
+
     try {
       const jobRes = await fetch(`${BASE_URL}/submit-job`, {
         method: "POST",
@@ -203,40 +235,19 @@ const MainScreen = () => {
           sessionId,
         }),
       });
-  
+
       const jobData = await jobRes.json();
       const jobId = jobData.jobId;
-  
+
       if (!jobId) throw new Error("Failed to submit job");
-  
-      // ⏳ Polling loop
-      const pollInterval = 2500;
-      const maxAttempts = 40;
-      let attempts = 0;
-  
-      const pollStatus = async () => {
-        const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
-        const data = await res.json();
-  
-        if (data.status === "complete" && data.result) {
-          console.log("✅ Avatar generation complete!");
-          setActiveJob({ jobId, avatarUrl: data.result });
-          setIsLoading(false);
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(pollStatus, pollInterval);
-        } else {
-          throw new Error("Timeout: Job took too long.");
-        }
-      };
-  
-      pollStatus();
+
+      startPolling(jobId); // ✅ properly scoped and fired
     } catch (err) {
       console.error("❌ Error during generation:", err);
       showToast("Something went wrong while generating.");
       setIsLoading(false);
     }
-  };  
+  };
 
   const handleViewPastJobs = () => {
     if (pastJobs.length > 0) {
