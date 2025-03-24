@@ -13,7 +13,7 @@ const MainScreen = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState("");
   const [customPrompt, setCustomPrompt] = useState("");
-  const [generatedAvatar, setGeneratedAvatar] = useState(null);
+  const [activeJob, setActiveJob] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [mobileUploadURL, setMobileUploadURL] = useState(null);
   const [isQrUploadActive, setIsQrUploadActive] = useState(false);
@@ -97,7 +97,7 @@ const MainScreen = () => {
             const statusData = await res.json();
 
             if (statusData.status === "complete" && statusData.result) {
-              setGeneratedAvatar(statusData.result);
+              setActiveJob({ jobId, avatarUrl: data.result });
               setIsLoading(false);
             } else if (attempts < maxAttempts) {
               attempts++;
@@ -230,26 +230,20 @@ const MainScreen = () => {
   const handleViewPastJobs = () => {
     if (pastJobs.length > 0) {
       const latest = pastJobs[0];
-      setGeneratedAvatar(latest.avatarUrl);
-      setPastJobs(pastJobs.filter((job) => job.jobId !== latest.jobId));
+      setActiveJob(latest);
+      setPastJobs(pastJobs.slice(1)); // Remove latest from gallery
       setShowPastJobsToast(false);
     }
   };
 
-  const handleSelectPastJob = (selectedAvatarUrl) => {
-    const current = pastJobs.find((job) => job.avatarUrl === generatedAvatar);
-    const selected = pastJobs.find(
-      (job) => job.avatarUrl === selectedAvatarUrl
-    );
-
-    if (
-      current &&
-      !pastJobs.some((job) => job.avatarUrl === current.avatarUrl)
-    ) {
-      setPastJobs((prev) => [...prev, current]);
+  const handleSelectPastJob = (selectedJob) => {
+    if (activeJob) {
+      setPastJobs((prev) => [
+        ...prev.filter((j) => j.jobId !== selectedJob.jobId),
+        activeJob,
+      ]);
     }
-
-    setGeneratedAvatar(selected.avatarUrl);
+    setActiveJob(selectedJob);
   };
 
   return (
@@ -262,7 +256,7 @@ const MainScreen = () => {
         </div>
       )}
 
-      {!generatedAvatar ? (
+      {!activeJob ? (
         <div className={styles.inputSection}>
           <ImageUploader
             onImageUpload={setUploadedImage}
@@ -291,13 +285,10 @@ const MainScreen = () => {
         </div>
       ) : (
         <AvatarDisplay
-          avatarUrl={generatedAvatar}
-          currentJobId={
-            pastJobs.find((job) => job.avatarUrl === generatedAvatar)?.jobId ||
-            null
-          }
+          avatarUrl={activeJob?.avatarUrl}
+          currentJobId={activeJob?.jobId}
           pastJobs={pastJobs}
-          onNewRun={() => setGeneratedAvatar(null)}
+          onNewRun={() => setActiveJob(null)}
           onReGenerate={handleGenerateAvatar}
           onSelectPastJob={handleSelectPastJob}
         />
