@@ -166,14 +166,6 @@ const MainScreen = () => {
     };
   }, [pollingActive]);
 
-  const generatePayload = async () => {
-    return {
-      imageBase64: await toBase64(uploadedImage),
-      stylePrompt: selectedStyle === "custom" ? customPrompt : selectedStyle,
-      sessionId,
-    };
-  };
-
   const handleGenerateAvatar = async () => {
     if (!uploadedImage || !(uploadedImage instanceof File)) {
       showToast("Please upload an image before generating.");
@@ -236,8 +228,10 @@ const MainScreen = () => {
 
   const handleViewPastJobs = () => {
     if (pastJobs.length > 0) {
-      setGeneratedAvatar(pastJobs[0]); // Show the latest one
-      setShowPastJobsToast(false); // Hide toast after click
+      const latest = pastJobs[0];
+      setGeneratedAvatar(latest.avatarUrl);
+      setPastJobs(pastJobs.filter((job) => job.jobId !== latest.jobId));
+      setShowPastJobsToast(false);
     }
   };
 
@@ -247,7 +241,7 @@ const MainScreen = () => {
 
       {showPastJobsToast && (
         <div className={styles.toastSuccess} onClick={handleViewPastJobs}>
-          🖼️ See your generated images
+          See your generated images
         </div>
       )}
 
