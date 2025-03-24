@@ -236,6 +236,22 @@ const MainScreen = () => {
     }
   };
 
+  const handleSelectPastJob = (selectedAvatarUrl) => {
+    const current = pastJobs.find((job) => job.avatarUrl === generatedAvatar);
+    const selected = pastJobs.find(
+      (job) => job.avatarUrl === selectedAvatarUrl
+    );
+
+    if (
+      current &&
+      !pastJobs.some((job) => job.avatarUrl === current.avatarUrl)
+    ) {
+      setPastJobs((prev) => [...prev, current]);
+    }
+
+    setGeneratedAvatar(selected.avatarUrl);
+  };
+
   return (
     <div className={styles.mainScreenContainer}>
       <h1 className={styles.appName}>Persona</h1>
@@ -283,7 +299,7 @@ const MainScreen = () => {
           pastJobs={pastJobs}
           onNewRun={() => setGeneratedAvatar(null)}
           onReGenerate={handleGenerateAvatar}
-          onSelectPastJob={(url) => setGeneratedAvatar(url)}
+          onSelectPastJob={handleSelectPastJob}
         />
       )}
 
