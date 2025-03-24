@@ -178,7 +178,12 @@ const MainScreen = () => {
       showToast("Please upload an image before generating.");
       return;
     }
-  
+    
+    if (!selectedStyle) {
+      showToast("Please select a style before generating.");
+      return;
+    }
+    
     if (selectedStyle === "custom" && customPrompt.trim() === "") {
       showToast("Please write a custom prompt before generating.");
       return;
