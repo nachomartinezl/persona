@@ -238,6 +238,12 @@ const MainScreen = () => {
   return (
     <div className={styles.mainScreenContainer}>
       <h1 className={styles.appName}>Persona</h1>
+      
+      {showPastJobsToast && (
+        <div className={styles.toast} onClick={handleViewPastJobs}>
+          🖼️ See your generated images
+        </div>
+      )}
 
       {!generatedAvatar ? (
         <div className={styles.inputSection}>
@@ -278,11 +284,6 @@ const MainScreen = () => {
 
       {isLoading && <Loader />}
       {toast && <div className={styles.toast}>{toast}</div>}
-      {showPastJobsToast && (
-        <div className={styles.toast} onClick={handleViewPastJobs}>
-          🖼️ See your generated images
-        </div>
-      )}
     </div>
   );
 };
