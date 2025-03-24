@@ -1,14 +1,20 @@
 // app/components/AvatarDisplay.js
-import React from 'react';
-import styles from '../styles/components/AvatarDisplay.module.css';
-import { FiDownload, FiRefreshCw, FiPlusCircle } from 'react-icons/fi';
+import React from "react";
+import styles from "../styles/components/AvatarDisplay.module.css";
+import { FiDownload, FiRefreshCw, FiPlusCircle } from "react-icons/fi";
 
-const AvatarDisplay = ({ avatarUrl, onNewRun, onReGenerate, pastJobs = [], onSelectPastJob }) => {
+const AvatarDisplay = ({
+  avatarUrl,
+  onNewRun,
+  onReGenerate,
+  pastJobs = [],
+  onSelectPastJob,
+}) => {
   const handleDownloadImage = () => {
     if (avatarUrl) {
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = avatarUrl;
-      link.download = 'ai_avatar.png';
+      link.download = "ai_avatar.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -18,9 +24,13 @@ const AvatarDisplay = ({ avatarUrl, onNewRun, onReGenerate, pastJobs = [], onSel
   return (
     <div className={styles.avatarDisplayContainer}>
       <h2>Your AI Avatar</h2>
-      
+
       {avatarUrl ? (
-        <img src={avatarUrl} alt="AI Generated Avatar" className={styles.avatarImage} />
+        <img
+          src={avatarUrl}
+          alt="AI Generated Avatar"
+          className={styles.avatarImage}
+        />
       ) : (
         <p>Error loading avatar.</p>
       )}
@@ -44,13 +54,13 @@ const AvatarDisplay = ({ avatarUrl, onNewRun, onReGenerate, pastJobs = [], onSel
         <div className={styles.pastJobsContainer}>
           <h4>Previous Generations</h4>
           <div className={styles.pastJobsGrid}>
-            {pastJobs.map((url, idx) => (
+            {pastJobs.map((job, idx) => (
               <img
-                key={idx}
-                src={url}
+                key={job.jobId || idx}
+                src={job.avatarUrl}
                 alt={`Past job ${idx}`}
                 className={styles.pastJobThumbnail}
-                onClick={() => onSelectPastJob(url)}
+                onClick={() => onSelectPastJob(job.avatarUrl)}
               />
             ))}
           </div>
