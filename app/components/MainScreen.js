@@ -168,45 +168,51 @@ const MainScreen = () => {
   }, [pollingActive]);
 
   const handleGenerateAvatar = async () => {
-    if (!uploadedImage || !(uploadedImage instanceof File)) {
+    let imageBase64 = null;
+  
+    if (uploadedImage && uploadedImage instanceof File) {
+      imageBase64 = await toBase64(uploadedImage);
+    } else if (activeJob?.avatarUrl?.startsWith("data:image/")) {
+      imageBase64 = activeJob.avatarUrl; // 👈 Use existing base64
+    } else {
       showToast("Please upload an image before generating.");
       return;
     }
-
+  
     if (selectedStyle === "custom" && customPrompt.trim() === "") {
       showToast("Please write a custom prompt before generating.");
       return;
     }
-
+  
     setIsLoading(true);
     setActiveJob(null);
-
+  
     try {
       const jobRes = await fetch(`${BASE_URL}/submit-job`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          imageBase64: await toBase64(uploadedImage),
+          imageBase64,
           stylePrompt:
             selectedStyle === "custom" ? customPrompt : selectedStyle,
           sessionId,
         }),
       });
-
+  
       const jobData = await jobRes.json();
       const jobId = jobData.jobId;
-
+  
       if (!jobId) throw new Error("Failed to submit job");
-
+  
       // ⏳ Polling loop
       const pollInterval = 2500;
       const maxAttempts = 40;
       let attempts = 0;
-
+  
       const pollStatus = async () => {
         const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
         const data = await res.json();
-
+  
         if (data.status === "complete" && data.result) {
           console.log("✅ Avatar generation complete!");
           setActiveJob({ jobId, avatarUrl: data.result });
@@ -218,14 +224,14 @@ const MainScreen = () => {
           throw new Error("Timeout: Job took too long.");
         }
       };
-
+  
       pollStatus();
     } catch (err) {
       console.error("❌ Error during generation:", err);
       showToast("Something went wrong while generating.");
       setIsLoading(false);
     }
-  };
+  };  
 
   const handleViewPastJobs = () => {
     if (pastJobs.length > 0) {
