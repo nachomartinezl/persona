@@ -117,7 +117,7 @@ const MainScreen = () => {
     setGeneratedAvatar(null);
   
     try {
-      const jobRes = await fetch(`${RAILWAY_API_URL}/submit-job`, {
+      const jobRes = await fetch(`${BASE_URL}/submit-job`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -138,7 +138,7 @@ const MainScreen = () => {
       let attempts = 0;
   
       const pollStatus = async () => {
-        const res = await fetch(`${RAILWAY_API_URL}/check-status/${jobId}`);
+        const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
         const data = await res.json();
   
         if (data.status === 'complete' && data.result) {
