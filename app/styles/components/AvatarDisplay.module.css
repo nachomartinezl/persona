@@ -63,3 +63,31 @@
   margin-top: 6px;
   color: #374151;
 }
+
+.pastJobsContainer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.pastJobsGrid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pastJobThumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.pastJobThumbnail:hover {
+  transform: scale(1.05);
+}
+
