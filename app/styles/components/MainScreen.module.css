@@ -82,3 +82,35 @@
   content: '⚠️';
   font-size: 1.2rem;
 }
+
+/* ✅ Past Jobs Toast (green & clickable) */
+.toastSuccess {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-left: 6px solid #10b981;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toastSuccess:hover {
+  background-color: #d1fae5;
+}
+
+.toastSuccess::before {
+  content: '🖼️';
+  font-size: 1.2rem;
+}
+
