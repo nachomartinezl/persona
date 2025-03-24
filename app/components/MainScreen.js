@@ -59,7 +59,8 @@ const MainScreen = () => {
         const data = await res.json();
         console.log("Fetched past jobs data:", data); // Log the entire data object - should now log the array directly
 
-        if (Array.isArray(data) && data.length > 0) { // Check if 'data' itself is an array
+        if (Array.isArray(data) && data.length > 0) {
+          // Check if 'data' itself is an array
           console.log("Past jobs found:", data); // Log the jobs array itself
           setPastJobs(data); // Directly set pastJobs to the fetched array 'data'
           setShowPastJobsToast(true);
@@ -275,6 +276,10 @@ const MainScreen = () => {
       ) : (
         <AvatarDisplay
           avatarUrl={generatedAvatar}
+          currentJobId={
+            pastJobs.find((job) => job.avatarUrl === generatedAvatar)?.jobId ||
+            null
+          }
           pastJobs={pastJobs}
           onNewRun={() => setGeneratedAvatar(null)}
           onReGenerate={handleGenerateAvatar}

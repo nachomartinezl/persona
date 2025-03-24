@@ -1,10 +1,10 @@
-// app/components/AvatarDisplay.js
 import React from "react";
 import styles from "../styles/components/AvatarDisplay.module.css";
 import { FiDownload, FiRefreshCw, FiPlusCircle } from "react-icons/fi";
 
 const AvatarDisplay = ({
   avatarUrl,
+  currentJobId,
   onNewRun,
   onReGenerate,
   pastJobs = [],
@@ -54,15 +54,17 @@ const AvatarDisplay = ({
         <div className={styles.pastJobsContainer}>
           <h4>Previous Generations</h4>
           <div className={styles.pastJobsGrid}>
-            {pastJobs.map((job, idx) => (
-              <img
-                key={job.jobId || idx}
-                src={job.avatarUrl}
-                alt={`Past job ${idx}`}
-                className={styles.pastJobThumbnail}
-                onClick={() => onSelectPastJob(job.avatarUrl)}
-              />
-            ))}
+            {pastJobs
+              .filter((job) => job.jobId !== currentJobId)
+              .map((job, idx) => (
+                <img
+                  key={job.jobId || idx}
+                  src={job.avatarUrl}
+                  alt={`Past job ${idx}`}
+                  className={styles.pastJobThumbnail}
+                  onClick={() => onSelectPastJob(job.avatarUrl)}
+                />
+              ))}
           </div>
         </div>
       )}
