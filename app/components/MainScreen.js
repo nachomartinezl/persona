@@ -57,15 +57,15 @@ const MainScreen = () => {
       try {
         const res = await fetch(`${BASE_URL}/completed-jobs/${sessionId}`);
         const data = await res.json();
-        console.log("Fetched past jobs data:", data); // Log the entire data object
+        console.log("Fetched past jobs data:", data); // Log the entire data object - should now log the array directly
 
-        if (Array.isArray(data.jobs) && data.jobs.length > 0) {
-          console.log("Past jobs found:", data.jobs); // Log the jobs array itself
-          setPastJobs(data.jobs);
+        if (Array.isArray(data) && data.length > 0) { // Check if 'data' itself is an array
+          console.log("Past jobs found:", data); // Log the jobs array itself
+          setPastJobs(data); // Directly set pastJobs to the fetched array 'data'
           setShowPastJobsToast(true);
           console.log("setShowPastJobsToast set to true"); // Confirm state update
         } else {
-          console.log("No past jobs found or jobs is not an array:", data.jobs); // Log when no jobs are found or format issue
+          console.log("No past jobs found or data is not an array:", data); // Log when no jobs are found or format issue
         }
       } catch (err) {
         console.error("❌ Failed to fetch past jobs:", err);
