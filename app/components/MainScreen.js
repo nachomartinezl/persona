@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styles from '../styles/components/MainScreen.module.css';
 import ImageUploader from './ImageUploader';
 import StyleSelector from './StyleSelector';
 import AvatarDisplay from './AvatarDisplay';
 import Loader from './Loader';
-const RAILWAY_API_URL = process.env.NEXT_PUBLIC_RAILWAY_API_URL;
+
+// ✅ Use env var or fallback if running in localhost without .env
+const BASE_URL = process.env.NEXT_PUBLIC_RAILWAY_API_URL || 'http://localhost:8000';
 
 const MainScreen = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -18,39 +20,39 @@ const MainScreen = () => {
   const [sessionId, setSessionId] = useState(null);
   const [toast, setToast] = useState(null);
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
-  useEffect(() => {
-    let existingId = localStorage.getItem('persona:sessionId');
-    if (!existingId) {
-      existingId = crypto.randomUUID();
-      localStorage.setItem('persona:sessionId', existingId);
-      console.log('🆕 New sessionId created:', existingId);
-    } else {
-      console.log('🔁 Existing sessionId restored:', existingId);
-    }
-    setSessionId(existingId);
-  }, []);
-
   const showToast = (msg, duration = 3000) => {
     setToast(msg);
     setTimeout(() => setToast(null), duration);
   };
 
+  const toBase64 = useCallback((file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }, []);
+
+  useEffect(() => {
+    const existingId = localStorage.getItem('persona:sessionId');
+    if (existingId) {
+      console.log('🔁 Existing sessionId restored:', existingId);
+      setSessionId(existingId);
+    } else {
+      const newId = crypto.randomUUID();
+      localStorage.setItem('persona:sessionId', newId);
+      setSessionId(newId);
+      console.log('🆕 New sessionId created:', newId);
+    }
+  }, []);
+
   const startQrUpload = () => {
-    console.log('🟢 QR upload started');
     setIsQrUploadActive(true);
     setPollingActive(true);
   };
 
   const stopQrUpload = () => {
-    console.log('🔴 QR upload stopped');
     setIsQrUploadActive(false);
     setPollingActive(false);
   };
@@ -67,14 +69,11 @@ const MainScreen = () => {
   useEffect(() => {
     if (!pollingActive) return;
 
-    console.log('🔁 Starting QR polling...');
-
     const pollingInterval = setInterval(async () => {
       try {
         const response = await fetch('/api/check-new-image');
         const data = await response.json();
         if (response.ok && data.latestImageUrl) {
-          console.log('📸 Received uploaded image from mobile!');
           const res = await fetch(data.latestImageUrl);
           const blob = await res.blob();
           const file = new File([blob], 'mobile-upload.png', { type: blob.type });
@@ -90,51 +89,51 @@ const MainScreen = () => {
     }, 3000);
 
     return () => {
-      console.log('🛑 Stopping QR polling...');
       clearInterval(pollingInterval);
       setPollingActive(false);
     };
   }, [pollingActive]);
 
+  const generatePayload = async () => {
+    return {
+      imageBase64: await toBase64(uploadedImage),
+      stylePrompt: selectedStyle === 'custom' ? customPrompt : selectedStyle,
+      sessionId,
+    };
+  };
+
   const handleGenerateAvatar = async () => {
     if (!uploadedImage || !(uploadedImage instanceof File)) {
-      showToast('Please upload an image before generating.');
-      return;
+      return showToast('Please upload an image before generating.');
     }
 
     if (selectedStyle === 'custom' && customPrompt.trim() === '') {
-      showToast('Please write a custom prompt before generating.');
-      return;
+      return showToast('Please write a custom prompt before generating.');
     }
 
     setIsLoading(true);
     setGeneratedAvatar(null);
 
     try {
-      const formData = new FormData();
-      formData.append('image', uploadedImage);
-      formData.append('style', selectedStyle === 'custom' ? customPrompt : selectedStyle);
-      formData.append('sessionId', sessionId);
-
-      const res = await fetch(RAILWAY_API_URL, {
+      const payload = await generatePayload();
+      const res = await fetch(`${BASE_URL}/submit-job`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageBase64: await toBase64(uploadedImage),
-          stylePrompt: selectedStyle === 'custom' ? customPrompt : selectedStyle,
-          sessionId,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
-      if (!res.ok || !data.avatarUrl) {
-        throw new Error('Avatar generation failed.');
+      if (!res.ok || !data.jobId) {
+        throw new Error('Job submission failed.');
       }
 
-      console.log('✅ Avatar generated!');
-      setGeneratedAvatar(data.avatarUrl);
+      console.log('📨 Job submitted:', data.jobId);
+
+      // 🟡 Polling logic for result can be added here (for MVP now we skip)
+
+      showToast('✅ Job submitted successfully!');
     } catch (err) {
-      console.error('Error generating avatar:', err);
+      console.error('❌ Error generating avatar:', err);
       showToast('Something went wrong while generating.');
     } finally {
       setIsLoading(false);
@@ -178,7 +177,6 @@ const MainScreen = () => {
       )}
 
       {isLoading && <Loader />}
-
       {toast && <div className={styles.toast}>{toast}</div>}
     </div>
   );
