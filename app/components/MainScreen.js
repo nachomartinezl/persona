@@ -78,59 +78,41 @@ const MainScreen = () => {
   useEffect(() => {
     if (!sessionId) return;
 
-    useEffect(() => {
-      if (!sessionId) return;
-    
-      const checkForPendingJob = async () => {
-        try {
-          const res = await fetch(`${BASE_URL}/latest-job/${sessionId}`);
-          const data = await res.json();
-    
-          if (!data.jobId) return;
-    
-          const { jobId, status, result } = data;
-    
-          if (status === "complete" && result) {
-            setGeneratedAvatar(result);
-          } else if (status === "failed") {
-            showToast("⚠️ Your last avatar generation failed. Please try again.");
-          } else if (status === "pending") {
-            console.log("⏳ Resuming polling for pending job:", jobId);
-            setIsLoading(true);
-    
-            const pollInterval = 2500;
-            const maxAttempts = 40;
-            let attempts = 0;
-    
-            const pollStatus = async () => {
-              const res = await fetch(`${BASE_URL}/check-status/${jobId}`);
-              const statusData = await res.json();
-    
-              if (statusData.status === "complete" && statusData.result) {
-                setGeneratedAvatar(statusData.result);
-                setIsLoading(false);
-              } else if (statusData.status === "failed") {
-                showToast("⚠️ Avatar generation failed. Please try again.");
-                setIsLoading(false);
-              } else if (attempts < maxAttempts) {
-                attempts++;
-                setTimeout(pollStatus, pollInterval);
-              } else {
-                showToast("⚠️ Avatar generation timed out.");
-                setIsLoading(false);
-              }
-            };
-    
-            pollStatus();
-          }
-        } catch (err) {
-          console.error("⚠️ Error checking for latest job:", err);
+    const checkForPendingJob = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/latest-job/${sessionId}`);
+        const data = await res.json();
+
+        if (data.jobId && data.status === "pending") {
+          console.log("⏳ Resuming polling for pending job:", data.jobId);
+          setIsLoading(true);
+
+          const pollInterval = 2500;
+          const maxAttempts = 40;
+          let attempts = 0;
+
+          const pollStatus = async () => {
+            const res = await fetch(`${BASE_URL}/check-status/${data.jobId}`);
+            const statusData = await res.json();
+
+            if (statusData.status === "complete" && statusData.result) {
+              setGeneratedAvatar(statusData.result);
+              setIsLoading(false);
+            } else if (attempts < maxAttempts) {
+              attempts++;
+              setTimeout(pollStatus, pollInterval);
+            } else {
+              showToast("Avatar generation timed out.");
+              setIsLoading(false);
+            }
+          };
+
+          pollStatus();
         }
-      };
-    
-      checkForPendingJob();
-    }, [sessionId]);
-    
+      } catch (err) {
+        console.error("⚠️ Error checking for latest job:", err);
+      }
+    };
 
     checkForPendingJob();
   }, [sessionId]);
