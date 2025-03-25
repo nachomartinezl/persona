@@ -1,5 +1,5 @@
 // app/components/AvatarDisplay.js
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/components/AvatarDisplay.module.css";
 import {
   FiDownload,
@@ -8,6 +8,8 @@ import {
   FiArrowLeft,
 } from "react-icons/fi";
 
+
+
 const AvatarDisplay = ({
   avatarUrl,
   onNewRun,
@@ -15,6 +17,9 @@ const AvatarDisplay = ({
   pastJobs = [],
   onSelectPastJob,
 }) => {
+
+  const [imgError, setImgError] = useState(false);
+
   const handleDownloadImage = () => {
     if (avatarUrl) {
       const link = document.createElement("a");
@@ -33,14 +38,15 @@ const AvatarDisplay = ({
       </div>
       <h2>Your AI Avatar</h2>
 
-      {avatarUrl ? (
+      {avatarUrl && !imgError ? (
         <img
           src={avatarUrl}
           alt="AI Generated Avatar"
           className={styles.avatarImage}
+          onError={() => setImgError(true)}
         />
       ) : (
-        <p>Error loading avatar.</p>
+        <p style={{ color: "#b91c1c" }}>Error displaying avatar.</p>
       )}
 
       <div className={styles.buttonContainer}>
