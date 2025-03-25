@@ -1,5 +1,4 @@
-// app/components/AvatarDisplay.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/components/AvatarDisplay.module.css";
 import {
   FiDownload,
@@ -8,8 +7,6 @@ import {
   FiArrowLeft,
 } from "react-icons/fi";
 
-
-
 const AvatarDisplay = ({
   avatarUrl,
   onNewRun,
@@ -17,8 +14,22 @@ const AvatarDisplay = ({
   pastJobs = [],
   onSelectPastJob,
 }) => {
-
   const [imgError, setImgError] = useState(false);
+  const [retryTimeout, setRetryTimeout] = useState(null);
+
+  useEffect(() => {
+    setImgError(false); // Reset error on new avatarUrl
+    if (retryTimeout) clearTimeout(retryTimeout);
+  }, [avatarUrl]);
+
+  const handleImageError = () => {
+    console.warn("❌ Image failed to load, retrying in 2s...");
+    const timeout = setTimeout(() => {
+      setImgError(false); // Retry image render
+    }, 2000);
+    setRetryTimeout(timeout);
+    setImgError(true);
+  };
 
   const handleDownloadImage = () => {
     if (avatarUrl) {
@@ -38,15 +49,18 @@ const AvatarDisplay = ({
       </div>
       <h2>Your AI Avatar</h2>
 
-      {avatarUrl && !imgError ? (
+      {!avatarUrl ? (
+        <p>Waiting for image...</p>
+      ) : !imgError ? (
         <img
           src={avatarUrl}
           alt="AI Generated Avatar"
           className={styles.avatarImage}
-          onError={() => setImgError(true)}
+          onError={handleImageError}
+          onLoad={() => console.log("✅ Image loaded successfully.")}
         />
       ) : (
-        <p style={{ color: "#b91c1c" }}>Error displaying avatar.</p>
+        <p style={{ color: "#b91c1c" }}>⚠️ Error displaying avatar. Retrying…</p>
       )}
 
       <div className={styles.buttonContainer}>
