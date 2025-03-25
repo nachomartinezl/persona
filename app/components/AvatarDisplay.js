@@ -1,7 +1,12 @@
 // app/components/AvatarDisplay.js
 import React from "react";
 import styles from "../styles/components/AvatarDisplay.module.css";
-import { FiDownload, FiRefreshCw, FiPlusCircle } from "react-icons/fi";
+import {
+  FiDownload,
+  FiRefreshCw,
+  FiPlusCircle,
+  FiArrowLeft,
+} from "react-icons/fi";
 
 const AvatarDisplay = ({
   avatarUrl,
@@ -23,6 +28,9 @@ const AvatarDisplay = ({
 
   return (
     <div className={styles.avatarDisplayContainer}>
+      <div className={styles.backArrow} onClick={onNewRun}>
+        <FiArrowLeft size={24} />
+      </div>
       <h2>Your AI Avatar</h2>
 
       {avatarUrl ? (

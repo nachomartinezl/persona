@@ -114,3 +114,8 @@
   font-size: 1.2rem;
 }
 
+.toast,
+.toastSuccess {
+  top: 90px; /* or even 100px if needed */
+}
+

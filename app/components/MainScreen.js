@@ -3,11 +3,12 @@ import styles from "../styles/components/MainScreen.module.css";
 import ImageUploader from "./ImageUploader";
 import StyleSelector from "./StyleSelector";
 import AvatarDisplay from "./AvatarDisplay";
+import EmailModal from "./EmailModal";
 import Loader from "./Loader";
 
 // ✅ Use env var or fallback if running in localhost without .env
 const BASE_URL =
-  process.env.NEXT_PUBLIC_RAILWAY_API_URL || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_RAILWAY_API_URL_TEST || "http://localhost:8000";
 
 const MainScreen = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -22,6 +23,10 @@ const MainScreen = () => {
   const [toast, setToast] = useState(null);
   const [pastJobs, setPastJobs] = useState([]);
   const [showPastJobsToast, setShowPastJobsToast] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [pendingGeneration, setPendingGeneration] = useState(false);
 
   const showToast = (msg, duration = 3000) => {
     setToast(msg);
@@ -47,6 +52,13 @@ const MainScreen = () => {
       localStorage.setItem("persona:sessionId", newId);
       setSessionId(newId);
       console.log("🆕 New sessionId created:", newId);
+    }
+    // 📩 Check if email is already saved
+    const storedEmail = localStorage.getItem("persona:email");
+    if (storedEmail) {
+      setUserEmail(storedEmail);
+      setEmailChecked(true);
+      console.log("📬 Email loaded from localStorage:", storedEmail);
     }
   }, []);
 
@@ -97,7 +109,7 @@ const MainScreen = () => {
             const statusData = await res.json();
 
             if (statusData.status === "complete" && statusData.result) {
-              setActiveJob({ jobId, avatarUrl: data.result });
+              setActiveJob({ jobId: data.jobId, avatarUrl: data.result });
               setIsLoading(false);
             } else if (attempts < maxAttempts) {
               attempts++;
@@ -192,7 +204,28 @@ const MainScreen = () => {
     pollStatus(jobId); // start polling loop
   };
 
+  const validateOrSaveEmail = async () => {
+    const localEmail = localStorage.getItem("persona:email");
+
+    if (localEmail) {
+      setUserEmail(localEmail);
+      setEmailChecked(true);
+      return true;
+    }
+
+    setShowEmailModal(true);
+    return false; // wait for user input
+  };
+
   const handleGenerateAvatar = async () => {
+    if (!emailChecked) {
+      setPendingGeneration(true); // 🔁 flag to continue later
+      const success = await validateOrSaveEmail();
+      if (!success) return;
+    }
+
+    setPendingGeneration(false); // ✅ reset if we proceed
+
     let imageBase64 = null;
 
     if (uploadedImage && uploadedImage instanceof File) {
@@ -306,6 +339,34 @@ const MainScreen = () => {
           onNewRun={() => setActiveJob(null)}
           onReGenerate={handleGenerateAvatar}
           onSelectPastJob={handleSelectPastJob}
+        />
+      )}
+
+      {showEmailModal && (
+        <EmailModal
+          onSubmit={async (email) => {
+            try {
+              const res = await fetch(`${BASE_URL}/save-email`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, sessionId }),
+              });
+              if (!res.ok) throw new Error("Failed to save email");
+              localStorage.setItem("persona:email", email);
+              setUserEmail(email);
+              setEmailChecked(true);
+              setShowEmailModal(false);
+              if (pendingGeneration) handleGenerateAvatar(); // 🚀 resume flow          
+            } catch (err) {
+              showToast("Error saving your email.");
+              console.error(err);
+            }
+          }}
+          onClose={() => {
+            setShowEmailModal(false);
+            setPendingGeneration(false);
+            showToast("Email is required to generate.");
+          }}
         />
       )}
 
