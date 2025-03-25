@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/components/StyleSelector.module.css";
-import styleData from "../data/styles_2.json";
+import styleData from "../data/styles_3.json";
 
 const StyleSelector = ({ onStyleSelect, onCustomPromptChange }) => {
   const [selectedStyleChip, setSelectedStyleChip] = React.useState(null);

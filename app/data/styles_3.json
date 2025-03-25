@@ -1,0 +1,55 @@
+{
+    "prefix": [
+      "Ultra-realistic close-up portrait. Face fully visible, untouched. Preserve original facial identity, detailed features, expressive eyes."
+    ],
+    "style": {
+      "detective": [
+        "Subtle shadows from trench coat and fedora. Magnifying glass held up. Dim misty alley. Noir lighting, ultra-detailed textures, 8K."
+      ],
+      "mafia": [
+        "Black pinstripe suit, fedora, gold chain. Detailed face, confident expression. Neon-lit nighttime city. Dramatic lighting, ultra-detailed, 8K.",
+        "Victorian coat, velvet collar, cravat, tilted top hat. Expressive eyes. Misty cobblestone street, gas lanterns. Noir, ultra-detailed, 8K."
+      ],
+      "cyberpunk": [
+        "Metallic sheen, glowing circuits under synthetic skin. Symmetrical facial features. Futuristic lab, holograms. Cool lighting, ultra-detailed, 8K.",
+        "Cybernetic headset, neon-blue circuits. Expressive eyes, tactical jacket. Rain-soaked cyberpunk city, neon lights. Volumetric fog, 8K.",
+        "Retro sunglasses, neon reflections. Leather jacket, expressive face. Vaporwave skyline, magenta sunset. Cinematic neon lighting, ultra-detailed, 8K."
+      ],
+      "artistic": [
+        "Face cracked like porcelain, neon acid colors bleeding through. Expressive eyes, abstract acrylic textures. Dark void background, ultra-detailed, 8K."
+      ],
+      "spaceman": [
+        "NASA spacesuit, detailed face visible. Mission patches, LED indicators. Futuristic space station overlooking Earth. Cinematic, ultra-detailed, 8K.",
+        "High-altitude flight suit, thermal layer exposed. Confident expression, expressive eyes. Fighter cockpit, HUD reflections. Aviation style, 8K."
+      ],
+      "firefighter": [
+        "Heavy-duty uniform, reflective stripes. Face detailed, battle-tested look. Active fire scene, smoke, emergency lights. Dramatic, ultra-detailed, 8K."
+      ],
+      "police": [
+        "Navy-blue uniform, badge reflecting light. Bulletproof vest. Expressive eyes, determined look. City street, flashing lights. Cinematic, 8K."
+      ],
+      "military": [
+        "Combat uniform, tactical gear. Determined expression, facial scars. War-torn urban background, smoke rising. Documentary realism, ultra-detailed, 8K."
+      ],
+      "cowboy": [
+        "Weathered cowboy hat, duster collar. Detailed face, sun-kissed skin. Warm western saloon background. Cinematic lighting, ultra-detailed, 8K."
+      ],
+      "gladiator": [
+        "Roman gladiator helmet, crimson cape. Expressive eyes, determined look. Blurred Colosseum, golden dust. Cinematic armor textures, ultra-detailed, 8K."
+      ],
+      "businessman": [
+        "Navy-blue suit, lapel pin. Expressive eyes, confident face. Press conference, reporters, flashes. Cinematic, high-detail, 8K.",
+        "Charcoal-gray tailored suit, silk tie. Detailed facial features, confident expression. High-rise office, sunset cityscape. Luxury cinematic, 8K."
+      ],
+      "gangster": [
+        "1920s gangster suit, expressive eyes. Al Capone style. Black and white, sepia tint. Classic cinematic portrait, ultra-detailed, 8K."
+      ],
+      "doctor": [
+        "Surgical cap, mask down. Tired, expressive eyes, focused face. Sterile operating room, medical lights. Cinematic realism, ultra-detailed, 8K."
+      ],
+      "pirate": [
+        "Tricorn hat, gold embroidery. Expressive eyes, sea-weathered skin. Stormy ocean, lantern-lit rails. Cinematic close-up, ultra-detailed, 8K."
+      ]
+    }
+  }
+  
