@@ -8,7 +8,7 @@ import Loader from "./Loader";
 
 // ✅ Use env var or fallback if running in localhost without .env
 const BASE_URL =
-  process.env.NEXT_PUBLIC_RAILWAY_API_URL_TEST || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_RAILWAY_API_URL || "http://localhost:8000";
 
 const MainScreen = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
