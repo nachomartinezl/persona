@@ -1,5 +1,3 @@
----
-
 # Persona – AI Avatar Generator
 
 **Persona** is a minimal, production-ready web app for generating ultra-realistic AI avatars from user photos and custom style prompts. Built with React (Next.js), FastAPI, Redis queue, Baseten ML API, and Firebase for seamless, modern full-stack experience.
@@ -90,5 +88,3 @@ MIT (see LICENSE file)
 
 - [Nacho Martinez](https://github.com/nachomartinezls)  
 - Open to contributions, feedback, and ideas! DM or open an issue.
-
----
