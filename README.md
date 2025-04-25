@@ -1,5 +1,14 @@
 # Persona – AI Avatar Generator
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Frontend: Vercel](https://img.shields.io/badge/Frontend-Vercel-black?logo=vercel&style=flat-square)](https://vercel.com/)
+[![Backend: Railway](https://img.shields.io/badge/Backend-Railway-purple?logo=railway&style=flat-square)](https://railway.app/)
+[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js-000?logo=next.js&style=flat-square)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&style=flat-square)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&style=flat-square)](https://www.python.org/)
+[![Firebase Firestore](https://img.shields.io/badge/Firebase-Firestore-orange?logo=firebase&style=flat-square)](https://firebase.google.com/)
+[![ML: Baseten](https://img.shields.io/badge/ML%20Powered-Baseten-00b4ff?style=flat-square)](https://baseten.co/)
+
 **Persona** is a minimal, production-ready web app for generating ultra-realistic AI avatars from user photos and custom style prompts. Built with React (Next.js), FastAPI, Redis queue, Baseten ML API, and Firebase for seamless, modern full-stack experience.
 
 ---
