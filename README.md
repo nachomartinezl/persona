@@ -95,5 +95,5 @@ MIT (see LICENSE file)
 
 ## 👤 Author
 
-- [Nacho Martinez](https://github.com/nachomartinezls)  
+- [Nacho Martinez](https://github.com/nachomartinezl)  
 - Open to contributions, feedback, and ideas! DM or open an issue.
